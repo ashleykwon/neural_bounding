@@ -1,15 +1,23 @@
 import time
 from torch import optim
-from src import device
+# from src import device
 
-from src.loss.loss import BCELossWithClassWeights
-from src.metrics.helper import print_metrics
-from src.metrics.metrics_calculator import MetricsCalculator
-from src.ours_kdop.ours_kdop import OursKDOP
-from src.wiring import get_source_data, get_training_data
+import sys
+import os
+
+# Add the parent directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname('src'), '..')))
+
+
+from loss.loss import BCELossWithClassWeights
+from metrics.helper import print_metrics
+from metrics.metrics_calculator import MetricsCalculator
+from ours_kdop.ours_kdop import OursKDOP
+from wiring import get_source_data, get_training_data
 
 
 def train_ours_kdop(object_name, query, dimension, metrics_registry):
+    device = 'cuda:0'
     print(f"oursKDOP {object_name} {dimension}D {query} query")
 
     # hyperparameters

@@ -1,11 +1,11 @@
 import argparse
 import torch
 
-from src.baselines.calculate_baselines import calculate_baselines
-from src.data.data_exporter import DataExporter
-from src.metrics.metrics_registry import MetricsRegistry
-from src.ours_kdop.train_ours_kdop import train_ours_kdop
-from src.ours_neural.train_ours_neural import train_ours_neural
+from calculate_baselines import calculate_baselines
+from data.data_exporter import DataExporter
+from metrics.metrics_registry import MetricsRegistry
+from ours_kdop.train_ours_kdop import train_ours_kdop
+from ours_neural.train_ours_neural import train_ours_neural
 
 
 def main():

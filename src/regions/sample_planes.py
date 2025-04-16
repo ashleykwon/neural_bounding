@@ -1,11 +1,12 @@
 import torch
 from torch import Tensor
 
-from src import device
+# from src import device
 
 
 # generate random normals for planes in n-dimensional space
 def generate_random_normals(n_planes, n_dim):
+    device = 'cuda:0'
     # generate random angles
     angles = torch.rand(n_planes, n_dim - 1, device=device) * torch.tensor([torch.pi] * (n_dim - 2) + [2 * torch.pi],
                                                                            device=device)

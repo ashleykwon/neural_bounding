@@ -1,9 +1,13 @@
 import torch.optim as optim
+import sys
+import os
 
-from src.loss.loss import BCELossWithClassWeights
-from src.metrics.helper import print_metrics
-from src.metrics.metrics_calculator import MetricsCalculator
-from src.wiring import get_source_data, get_training_data, get_model
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname('src'), '..')))
+
+from loss.loss import BCELossWithClassWeights
+from metrics.helper import print_metrics
+from metrics.metrics_calculator import MetricsCalculator
+from wiring import get_source_data, get_training_data, get_model
 
 
 def train_ours_neural(object_name, query, dimension, metrics_registry):

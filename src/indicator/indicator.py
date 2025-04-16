@@ -1,11 +1,11 @@
 import torch
 
-from src import device
+# from src import device
 
 
 def compute_scalars(array_shape):
     # compute scaling factors based on the dimensions of the array
-    return torch.tensor(array_shape, device=device) - 1
+    return torch.tensor(array_shape, device='cuda:0') - 1
 
 
 def filter_points(points, array_shape):

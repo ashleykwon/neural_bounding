@@ -1,6 +1,5 @@
 import torch
 
-from src import device
 
 
 # kDOP implementation - k=4m, where m is the query dimensionality
@@ -8,15 +7,15 @@ def calculate_4kDOP_normals(dim):
     if dim < 2:
         raise ValueError("dimensionality must be greater or equals to 2")
 
-    normals = torch.empty(dim * 2, dim, device=device)
+    normals = torch.empty(dim * 2, dim, device='cuda:0')
 
     for i in range(dim):
-        normal = torch.full((dim,), 0., dtype=torch.float, device=device)
+        normal = torch.full((dim,), 0., dtype=torch.float, device='cuda:0')
         normal[i] = 1.
         normals[i] = normal
 
     for j in range(dim):
-        normal = torch.full((dim,), 1., dtype=torch.float, device=device)
+        normal = torch.full((dim,), 1., dtype=torch.float, device='cuda:0')
         normal[j] = 0.
         normals[dim + j] = normal
 
@@ -24,8 +23,8 @@ def calculate_4kDOP_normals(dim):
 
 
 def calculate_kDOP(gt_positive, gt_negative, metrics_registry, dim):
-    mins = torch.empty(dim * 2, 1, device=device)
-    maxs = torch.empty(dim * 2, 1, device=device)
+    mins = torch.empty(dim * 2, 1, device='cuda:0')
+    maxs = torch.empty(dim * 2, 1, device='cuda:0')
 
     normals = calculate_4kDOP_normals(dim)
 
@@ -38,7 +37,7 @@ def calculate_kDOP(gt_positive, gt_negative, metrics_registry, dim):
         maxs[i] = max
 
     # Initialize a tensor to keep track of cumulative conditions
-    cumulative_conditions_fp = torch.full((gt_negative.shape[0],), True, dtype=torch.bool, device=device)
+    cumulative_conditions_fp = torch.full((gt_negative.shape[0],), True, dtype=torch.bool, device='cuda:0')
 
     for i in range(dim*2):
         new_points = gt_negative @ normals[i].unsqueeze(0).T

@@ -1,15 +1,15 @@
 import torch
 import torch.optim as optim
 
-from src import device
+
 
 # OElli - aka. oriented ellipsoid, non-axis-aligned ellipsoid or NonAAEllipsoid - implementation
 def generate_ellipsoid_params(dimensions, centre=0.5, radius=0.3):
     # create the centre coordinates
-    centre_coords = torch.full((dimensions,), centre, dtype=torch.float32, device=device)
+    centre_coords = torch.full((dimensions,), centre, dtype=torch.float32, device='cuda:0')
 
     # create the axis lengths (radius)
-    axis_lengths = torch.full((dimensions,), radius, dtype=torch.float32, device=device)
+    axis_lengths = torch.full((dimensions,), radius, dtype=torch.float32, device='cuda:0')
 
     # concatenate to form the ellipsoid parameters
     # initialize ellipsoid parameters: [x_center, y_center, z_center, a, b, c]

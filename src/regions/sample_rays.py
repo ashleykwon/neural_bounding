@@ -1,6 +1,6 @@
 import torch
 
-from src import device
+# from src import device
 
 
 # calculate points along rays based on origin, t, and direction
@@ -10,6 +10,7 @@ def to_ray(origin, t, direction):
 
 # generate random directions for rays in n-dimensional space
 def generate_random_directions(n_rays, n_dim):
+    device = 'cuda:0'
     # generate random angles
     angles = torch.rand(n_rays, n_dim - 1, device=device) * torch.tensor([torch.pi] * (n_dim - 2) + [2 * torch.pi],
                                                                          device=device)
@@ -30,6 +31,7 @@ def generate_random_directions(n_rays, n_dim):
 
 # sample points along rays in n-dimensional space
 def sample_ray(rays, n_samples):
+    device = 'cuda:0'
     n_rays = rays.shape[0]
     n_dim = rays.shape[1] // 2
 
@@ -41,6 +43,7 @@ def sample_ray(rays, n_samples):
 
 # generate random rays
 def get_rays(batch_size, n_dim):
+    device = 'cuda:0'
     # generate random origins and directions
     random_origins = torch.rand([batch_size, n_dim], device=device)
     random_directions = generate_random_directions(batch_size, n_dim)

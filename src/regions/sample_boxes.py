@@ -1,14 +1,14 @@
 import torch
 
-from src import device
+# from src import device
 
 
 def get_boxes(batch_size, n_dim):
     # generate random minimum coordinates for boxes
-    box_min = torch.rand(batch_size, n_dim, device=device)
+    box_min = torch.rand(batch_size, n_dim, device='cuda:0')
 
     # generate random maximum coordinates for boxes
-    box_max = (1 - box_min) * torch.rand(batch_size, n_dim, device=device) + box_min
+    box_max = (1 - box_min) * torch.rand(batch_size, n_dim, device='cuda:0') + box_min
 
     # generate boxes by concatenating box_min and box_max
     boxes = torch.cat((box_min, box_max), dim=1)
@@ -27,6 +27,6 @@ def sample_boxes(boxes, n_samples):
 
     # generate random points within each box
     random_points = box_min[:, None, :] + box_range[:, None, :] * torch.rand(batch_size, n_samples, n_dim,
-                                                                             device=device)
+                                                                             device='cuda:0')
 
     return random_points

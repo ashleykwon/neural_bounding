@@ -1,15 +1,15 @@
 from pathlib import Path
 
-from src import device
-from src.data.data_importer import load_data_2D, load_data_3D, load_data_4D
-from src.indicator.indicator import indicator
-from src.ours_neural.nn_model_2D import OursNeural2D
-from src.ours_neural.nn_model_3D import OursNeural3D
-from src.ours_neural.nn_model_4D import OursNeural4D, OursNeural4DPlane
-from src.regions.sample_boxes import get_boxes, sample_boxes
-from src.regions.sample_planes import get_planes, sample_planes
-from src.regions.sample_points import get_points
-from src.regions.sample_rays import get_rays, sample_ray
+# from src import device
+from data.data_importer import load_data_2D, load_data_3D, load_data_4D
+from indicator.indicator import indicator
+from ours_neural.nn_model_2D import OursNeural2D
+from ours_neural.nn_model_3D import OursNeural3D
+from ours_neural.nn_model_4D import OursNeural4D, OursNeural4DPlane
+from regions.sample_boxes import get_boxes, sample_boxes
+from regions.sample_planes import get_planes, sample_planes
+from regions.sample_points import get_points
+from regions.sample_rays import get_rays, sample_ray
 
 
 def get_source_data(object_name, dimension):
@@ -25,6 +25,7 @@ def get_source_data(object_name, dimension):
 
 
 def get_training_data(data, query, dimension, n_regions, n_samples=1):
+    device = 'cuda:0'
     if query == 'point':
         # generate n_regions number of random points
         features = get_points(n_regions, dimension).to(device)
@@ -66,6 +67,7 @@ def get_training_data(data, query, dimension, n_regions, n_samples=1):
 
 # select model based on query and dimension
 def get_model(query, dimension):
+    device = 'cuda:0'
     if dimension == 2 and query == "point":
         return OursNeural2D(dimension).to(device)
     elif dimension == 2 and query != "point":

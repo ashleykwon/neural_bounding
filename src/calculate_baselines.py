@@ -1,12 +1,12 @@
-from src.baselines.AAElli import calculate_AAElli
-from src.baselines.AABox import calculate_AABox
-from src.baselines.OElli import calculate_OElli
-from src.baselines.helper import extract_ground_truth_classes
-from src.baselines.OBox import calculate_OBox
-from src.baselines.Sphere import calculate_Sphere
-from src.baselines.kDOP import calculate_kDOP
-from src.metrics.helper import print_metrics
-from src.wiring import get_source_data, get_training_data
+from baselines.AAElli import calculate_AAElli
+from baselines.AABox import calculate_AABox
+from baselines.OElli import calculate_OElli
+from baselines.helper import extract_ground_truth_classes
+from baselines.OBox import calculate_OBox
+from baselines.Sphere import calculate_Sphere
+from baselines.kDOP import calculate_kDOP
+from metrics.helper import print_metrics
+from wiring import get_source_data, get_training_data
 
 
 def calculate_baselines(object_name, query, dimension, metrics_registry):

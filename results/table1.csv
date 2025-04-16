@@ -1,0 +1,9 @@
+,2D Point,2D Ray,2D Plane,2D Box,3D Point,3D Ray,3D Plane,3D Box,4D Point,4D Ray,4D Plane,4D Box
+AABox,,,,,,,,,,,,
+OBox,,,,,,,,,,,,
+Sphere,,,,,,,,,,,,
+AAElli,,,,,,,,,,,,
+OElli,,,,,,,,,,,,
+kDOP,,,,,,,,,,,,
+oursKDOP,,,,,,,,,,,,
+oursNeural,,,,,,,,,,,,
