@@ -56,7 +56,7 @@ def calculate_kDOP(gt_positive, gt_negative, metrics_registry, dim):
     false_positive = torch.sum(cumulative_conditions_fp).item()
 
     # Initialise a tensor to keep track of cumulative conditions for false_negative
-    cumulative_conditions_fn = torch.full((gt_positive.shape[0],), False, dtype=torch.bool, device=device)
+    cumulative_conditions_fn = torch.full((gt_positive.shape[0],), False, dtype=torch.bool, device='cuda:0')
 
     for i in range(dim*2):
         new_points = gt_positive @ normals[i].unsqueeze(0).T

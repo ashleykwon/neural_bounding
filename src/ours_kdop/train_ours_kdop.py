@@ -42,7 +42,7 @@ def train_ours_kdop(object_name, query, dimension, metrics_registry):
 
     # initialise counter and print_frequency
     weight_schedule_frequency = 100_000
-    total_iterations = weight_schedule_frequency * 500  # set high iterations for early stopping to terminate training
+    total_iterations = weight_schedule_frequency #* 500  # set high iterations for early stopping to terminate training
     evaluation_frequency = weight_schedule_frequency // 2
     print_frequency = 1000  # print loss every 1k iterations
 

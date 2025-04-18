@@ -26,21 +26,21 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 # 3D experiments (3D point, ray, plane and box queries)
 # initialise objects for 3D spatial queries
-objects=("allLABS")
+objects=("allLABs")
 
 # loop over objects and dimensions
 for object in "${objects[@]}"; do
   # set command line arguments for various queries
   point="--object_name ${object} --query point --dim 3"
-  ray="--object_name ${object} --query ray --dim 3"
-  plane="--object_name ${object} --query plane --dim 3"
-  box="--object_name ${object} --query box --dim 3"
+  # ray="--object_name ${object} --query ray --dim 3"
+  # plane="--object_name ${object} --query plane --dim 3"
+  # box="--object_name ${object} --query box --dim 3"
 
   # execute python script with the given arguments
   python3 ./src/run_experiments.py $point
-  python3 ./src/run_experiments.py $ray
-  python3 ./src/run_experiments.py $plane
-  python3 ./src/run_experiments.py $box
+  # python3 ./src/run_experiments.py $ray
+  # python3 ./src/run_experiments.py $plane
+  # python3 ./src/run_experiments.py $box
 done
 
 
@@ -68,4 +68,4 @@ wait
 
 
 # make Table 1 from the results of the experiments above
-python3 src/make_table1.py
+# python3 src/make_table1.py

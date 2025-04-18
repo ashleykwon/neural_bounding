@@ -1,6 +1,9 @@
 import torch.optim as optim
 import sys
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname('src'), '..')))
 
@@ -14,11 +17,21 @@ def train_ours_neural(object_name, query, dimension, metrics_registry):
     print(f"oursNeural {object_name} {dimension}D {query} query")
 
     # hyperparameters
-    n_regions = 50_000
+    n_regions = 32768 #50_000
     n_samples = 1500 if dimension == 4 else 500
 
     # load data
-    data = get_source_data(object_name=object_name, dimension=dimension)
+    data = get_source_data(object_name=object_name, dimension=dimension) # 32 by 32 by 32
+    data2 =data.cpu().detach().numpy()
+    values = data2.flatten()
+    x, y, z = np.indices(data2.shape)
+    x_flat = x.flatten()
+    y_flat = y.flatten()
+    z_flat = z.flatten()
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(x_flat, y_flat, z_flat, c=values, cmap='gray', marker='o') 
+    plt.show()
 
     # initialise model
     model = get_model(query=query, dimension=dimension)
@@ -30,7 +43,7 @@ def train_ours_neural(object_name, query, dimension, metrics_registry):
 
     # initialise counter and print_frequency
     weight_schedule_frequency = 250_000
-    total_iterations = weight_schedule_frequency * 200  # set high iterations for early stopping to terminate training
+    total_iterations = 1000000 #weight_schedule_frequency * 200  # set high iterations for early stopping to terminate training
     evaluation_frequency = weight_schedule_frequency // 5
     print_frequency = 1000  # print loss every 1k iterations
 
@@ -43,6 +56,7 @@ def train_ours_neural(object_name, query, dimension, metrics_registry):
 
         # forward pass
         output = model(features)
+        # print(output.shape) # 50,000 by 1 -> 32 by 32 by 32
 
         # compute loss
         loss = criterion(output, targets)
@@ -56,8 +70,20 @@ def train_ours_neural(object_name, query, dimension, metrics_registry):
         if (iteration + 1) % print_frequency == 0 or iteration == 0:
             print(f'Iteration: {iteration + 1}, Loss: {loss.item()}')
 
-        if (iteration + 1) % evaluation_frequency == 0 or iteration == 0:
+        #if (iteration + 1) % evaluation_frequency == 0 or iteration == 0:
+        if iteration == total_iterations-1:
             prediction = (model(features).cpu().detach() >= 0.5).float().numpy()
+            # Plot values in predictions when n_regions = input data dimension 
+            predictionsReshaped = prediction.reshape(32, 32, 32)
+            values = predictionsReshaped.flatten()
+            x, y, z = np.indices(predictionsReshaped.shape)
+            x_flat = x.flatten()
+            y_flat = y.flatten()
+            z_flat = z.flatten()
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            ax.scatter(x_flat, y_flat, z_flat, c=values, cmap='gray', marker='o') 
+            plt.show()
             target = targets.cpu().detach().numpy()
             metrics = MetricsCalculator.calculate(prediction=prediction, target=target)
             print_metrics(metrics)

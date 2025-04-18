@@ -50,12 +50,12 @@ def main():
     data_exporter = DataExporter(object_name=args.object_name, dimension=args.dim, query=args.query)
 
     # calculate all baseline results
-    calculate_baselines(object_name=args.object_name, query=args.query, dimension=args.dim,
-                        metrics_registry=metrics_registry)
+    # calculate_baselines(object_name=args.object_name, query=args.query, dimension=args.dim,
+    #                     metrics_registry=metrics_registry)
 
     # run oursKDOP results
-    train_ours_kdop(object_name=args.object_name, query=args.query, dimension=args.dim,
-                    metrics_registry=metrics_registry)
+    # train_ours_kdop(object_name=args.object_name, query=args.query, dimension=args.dim,
+    #                 metrics_registry=metrics_registry)
 
     # run oursNeural results
     train_ours_neural(object_name=args.object_name, query=args.query, dimension=args.dim,

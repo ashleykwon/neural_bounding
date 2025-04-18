@@ -128,6 +128,7 @@ def read_as_3d_array(fp, fix_coords=True):
     """
     dims, translate, scale = read_header(fp)
     raw_data = np.frombuffer(fp.read(), dtype=np.uint8)
+    # print(raw_data.shape)
     # if just using reshape() on the raw data:
     # indexing the array as array[i,j,k], the indices map into the
     # coords as:
@@ -140,6 +141,8 @@ def read_as_3d_array(fp, fix_coords=True):
     # j -> y
     # k -> z
     values, counts = raw_data[::2], raw_data[1::2]
+    # print(values.shape)
+    # print(counts.shape)
     data = np.repeat(values, counts).astype(bool)
     data = data.reshape(dims)
     if fix_coords:

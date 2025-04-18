@@ -9,7 +9,7 @@ def generate_random_normals(n_planes, n_dim):
     device = 'cuda:0'
     # generate random angles
     angles = torch.rand(n_planes, n_dim - 1, device=device) * torch.tensor([torch.pi] * (n_dim - 2) + [2 * torch.pi],
-                                                                           device=device)
+                                                                           device='cuda:0')
     cos_vals = torch.cos(angles)
     sin_vals = torch.sin(angles)
 
@@ -31,7 +31,7 @@ def get_planes(batch_size: int, n_dim: int) -> Tensor:
     normals = generate_random_normals(n_planes=batch_size, n_dim=n_dim)
 
     # generate random origin points
-    points = torch.rand(batch_size, n_dim, device=device)
+    points = torch.rand(batch_size, n_dim, device='cuda:0')
 
     # concatenate normals and points
     return torch.cat((normals, points), dim=1)
@@ -40,7 +40,7 @@ def get_planes(batch_size: int, n_dim: int) -> Tensor:
 # find n_samples random points on each plane defined by its normal vector and a point
 def find_points_on_plane(normals: Tensor, points: Tensor, n_samples: int) -> Tensor:
     # generate random points in the same dimension as the plane
-    random_points = torch.rand(normals.shape[0], n_samples, normals.shape[1], device=device) * 6 - 3
+    random_points = torch.rand(normals.shape[0], n_samples, normals.shape[1], device='cuda:0') * 6 - 3
 
     # calculate the constant term for the plane equation
     constant_terms = torch.sum(normals * points, dim=1, keepdim=True)

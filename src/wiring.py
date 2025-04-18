@@ -28,10 +28,11 @@ def get_training_data(data, query, dimension, n_regions, n_samples=1):
     device = 'cuda:0'
     if query == 'point':
         # generate n_regions number of random points
-        features = get_points(n_regions, dimension).to(device)
+        features = get_points(n_regions, dimension).to(device) # n_regions by dimensions
 
         # generate the corresponding targets using indicator function
         targets = indicator(features, data).to(device)
+        # print(targets.shape)
     elif query == 'ray':
         # generate n_regions number of random rays
         features = get_rays(n_dim=dimension, batch_size=n_regions).to(device)
